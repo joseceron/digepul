@@ -13,7 +13,7 @@ const excelToJson = (path, callback) => {
         console.log('JsonPedidos tamaño = 0')
         node_xj( {
             input: path,  // input xls
-            output: "./files/ItemspedidosJSON.json", // output json
+            output: "./files/ItemspedidosJSON.json",  // output json
             sheet: "Facturas"  // specific sheetname
         }, function (err, result) {
             if (err) {
@@ -25,16 +25,22 @@ const excelToJson = (path, callback) => {
         );
     }
     else{
+        
+        console.log('Paso de json creado')
          callback('','Archivo JSONPedidos existente, '+ loadNotes().length+ ' pedidos') //archivo existente
     }   
 
 } 
 
 const functions2 = (input, callback) => {
-    
+    console.log('Inicio functions2')
+    console.log('facturas' +  loadDocumentos().length)
+    console.log('functions2: ' + __dirname )
+    saveDocumentos([])
     do{
         //loadNotes carga los items del pedido
-        setTimeout(()=>{          
+        setTimeout(()=>{     
+            console.log('prueba de ccarga')     
             listNotes() //guardar el array de idsFacturas
             setDocumentos() 
             console.log('Cantidad facturas: '+loadDocumentos().length)
@@ -50,7 +56,7 @@ const functions2 = (input, callback) => {
 const listNotes = () => {
     //read ItemspedidosJSON
     console.log('Entrada método listNotes: ' + __dirname )
-    console.log('cantidad items en pedidos: '+loadNotes() .length)
+    console.log('cantidad items en pedidos:  '+loadNotes() .length)
     const notes = loadNotes()   
        
     notes.forEach((note) => {            
@@ -81,7 +87,7 @@ const setDocumentos = ()=>{
 //Facturas desde el excel sin formato
 const loadNotes= ()=>{
     try {                                   
-        const dataBuffer = fs.readFileSync('../files/ItemspedidosJSON.json')
+        const dataBuffer = fs.readFileSync('./files/ItemspedidosJSON.json')
         const dataJSON = dataBuffer.toString()
         return JSON.parse(dataJSON)
     } catch (e) {
@@ -327,6 +333,7 @@ module.exports =
     node_xj:node_xj,
     excelToJson:excelToJson,
     functions2: functions2,
+    removeDocumentos:removeDocumentos
   
     
 }

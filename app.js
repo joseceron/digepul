@@ -79,7 +79,8 @@ app.post('/task', (req, res) => {
                             return console.log(chalk.red.inverse('Error escribiendo JSONPedidos:' + error))
                         }
                         console.log(chalk.green.inverse('call: ' + msg))
-                        fs.unlinkSync('./files/documentosJSON.json')
+                        // fs.unlinkSync('./files/documentosJSON.json')
+                        functions.removeDocumentos();
                         res.send({
                             mensaje: 'respuesta'
                         })
