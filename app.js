@@ -63,6 +63,10 @@ app.post('/task', (req, res) => {
             // }
             // );
 
+            console.log('crear itempspedidosJSON' )
+            const doc=[]
+            functions.saveDocumentos(doc)
+
             functions.excelToJson(file.path, (error, msg) => {
                 if (error) {
                     return console.log(chalk.red.inverse('Error escribiendo JSONPedidos:' + error))

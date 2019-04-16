@@ -34,9 +34,9 @@ const excelToJson = (path, callback) => {
 
 const functions2 = (input, callback) => {
     console.log('Inicio functions2')
-    console.log('facturas' +  loadDocumentos().length)
-    console.log('functions2: ' + __dirname )
-    saveDocumentos([])
+  
+    
+    console.log('facturas tamaño' +  loadDocumentos().length)
     do{
         //loadNotes carga los items del pedido
         setTimeout(()=>{     
@@ -55,7 +55,7 @@ const functions2 = (input, callback) => {
 
 const listNotes = () => {
     //read ItemspedidosJSON
-    console.log('Entrada método listNotes: ' + __dirname )
+   
     console.log('cantidad items en pedidos:  '+loadNotes() .length)
     const notes = loadNotes()   
        
@@ -108,11 +108,14 @@ const loadIds= ()=>{
 }
 //get Documentos a enviar al API
 const loadDocumentos= ()=>{
+    console.log('inicio loadDocumentos')
     try {
         const dataBuffer = fs.readFileSync('./files/documentosJSON.json')
         const dataJSON = dataBuffer.toString()
+        console.log('inicio loadDocumentos: try exitoso')
         return JSON.parse(dataJSON)
     } catch (e) {
+        console.log('inicio loadDocumentos error: ' + e)
         return []
     }
 
@@ -270,6 +273,7 @@ const readNote = (title) => {
 
 
 const saveDocumentos =  (notes)=>{
+    console.log('guardando documentosJSON.json')
     const dataJSON = JSON.stringify(notes)
     
     fs.writeFileSync('./files/documentosJSON.json',dataJSON)
@@ -333,7 +337,8 @@ module.exports =
     node_xj:node_xj,
     excelToJson:excelToJson,
     functions2: functions2,
-    removeDocumentos:removeDocumentos
+    removeDocumentos:removeDocumentos,
+    saveDocumentos
   
     
 }
