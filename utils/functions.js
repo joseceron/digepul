@@ -13,7 +13,7 @@ const excelToJson = (path, callback) => {
         console.log('JsonPedidos tamaño = 0')
         node_xj( {
             input: path,  // input xls
-            output: "./files/ItemspedidosJSON.json",  // output json
+            output: "./ItemspedidosJSON.json",  // output json
             sheet: "Facturas"  // specific sheetname
         }, function (err, result) {
             if (err) {
@@ -87,7 +87,7 @@ const setDocumentos = ()=>{
 //Facturas desde el excel sin formato
 const loadNotes= ()=>{
     try {                                   
-        const dataBuffer = fs.readFileSync('./files/ItemspedidosJSON.json')
+        const dataBuffer = fs.readFileSync('./ItemspedidosJSON.json')
         const dataJSON = dataBuffer.toString()
         return JSON.parse(dataJSON)
     } catch (e) {
@@ -98,7 +98,7 @@ const loadNotes= ()=>{
 //Array de idFacturas filtrado
 const loadIds= ()=>{
     try {
-        const dataBuffer = fs.readFileSync('./files/idsJSON.json')
+        const dataBuffer = fs.readFileSync('./idsJSON.json')
         const dataJSON = dataBuffer.toString()
         return JSON.parse(dataJSON)
     } catch (e) {
@@ -110,7 +110,7 @@ const loadIds= ()=>{
 const loadDocumentos= ()=>{
     console.log('inicio loadDocumentos')
     try {
-        const dataBuffer = fs.readFileSync('./files/documentosJSON.json')
+        const dataBuffer = fs.readFileSync('./documentosJSON.json')
         const dataJSON = dataBuffer.toString()
         console.log('inicio loadDocumentos: try exitoso')
         return JSON.parse(dataJSON)
@@ -273,20 +273,21 @@ const readNote = (title) => {
 
 
 const saveDocumentos =  (notes)=>{
-    console.log('guardando documentosJSON.json')
+    console.log('guardando documentosJSON.json: ' + notes)
     const dataJSON = JSON.stringify(notes)
+    console.log(dataJSON)
     
-    fs.writeFileSync('./files/documentosJSON.json',dataJSON)
+    fs.writeFileSync('./documentosJSON.json',dataJSON)
 }
 
 const saveNotes =  (notes)=>{
     const dataJSON = JSON.stringify(notes)
-    fs.writeFileSync('./files/ItemspedidosJSON.json',dataJSON)
+    fs.writeFileSync('./ItemspedidosJSON.json',dataJSON)
 }
 
 const saveIdsFacturas =  (notes)=>{
     const dataJSON = JSON.stringify(notes)
-    fs.writeFileSync('./files/idsJSON.json',dataJSON)
+    fs.writeFileSync('./idsJSON.json',dataJSON)
 }
 
 

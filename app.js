@@ -48,42 +48,27 @@ app.post('/task', (req, res) => {
         })
         .on('file', (name, file) => {
             console.log('File', 'Nombre:' + name, 'ARCHIVO:' + file)
+           
 
-            // node_xj({
-            //     input: file.path,  // input xls
-            //     output: "./files/temspedidosJSON.json", // output json
-            //     sheet: "Facturas"  // specific sheetname
-            // }, function (err, result) {
-            //     pedidos = result.length
-            //     if (err) {
-            //         console.log(err) // error creando archivo
-            //     } else {
-            //         console.log('', 'Archivo JsonPedidos creado, ' + result.length + ' pedidos') //archivo creado
-            //     }
-            // }
-            // );
-
-            console.log('crear itempspedidosJSON' )
-            const doc=[]
-            functions.saveDocumentos(doc)
-
+            //pasa a json el archivo Excel
             functions.excelToJson(file.path, (error, msg) => {
                 if (error) {
                     return console.log(chalk.red.inverse('Error escribiendo JSONPedidos:' + error))
                 }
                 console.log(chalk.green.inverse('call: ' + msg))
 
+                //Call back para procesamiento del json
                 functions.functions2('', (err, message) => {
                     if (err) { return console.log('Error en ArrayIds: ' + err) }
                     console.log(chalk.green.inverse('Fin set arraysIds: ' + message))
 
-
+                    //envío al api de puerto del gv para registro de facturas
                     request.postAPI(functions.loadDocumentos(), (error, msg) => {
                         if (error) {
                             return console.log(chalk.red.inverse('Error escribiendo JSONPedidos:' + error))
                         }
                         console.log(chalk.green.inverse('call: ' + msg))
-                        // fs.unlinkSync('./files/documentosJSON.json')
+                        
                         functions.removeDocumentos();
                         res.send({
                             mensaje: 'respuesta'
@@ -113,15 +98,8 @@ app.post('/task', (req, res) => {
 
 // This metod needs to be last
 app.get('/descarga', (req, res) => {
-//   console.log(req);
-//   var file = req.params.file;
-//   var fileLocation = path.join('./files/Errores.xlsx',file);
-//   console.log(fileLocation);
-//   res.download(fileLocation, file); 
 
-//const file = fs.createWriteStream("./files/Errores.xlsx");
-
-var file = __dirname + '/files/Errores.xlsx';
+var file = __dirname + '/Errores.xlsx';
 console.log(file)
 
  res.download(file)

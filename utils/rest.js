@@ -63,7 +63,7 @@ const saveLogs = (logs, facturasJSON) => {
     })
   })
 
-  xlsx.write('./files/Errores.xlsx', err, function (error) {
+  xlsx.write('./Errores.xlsx', err, function (error) {
     // Error handling here
     if (error) {
       console.error(error)
